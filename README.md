@@ -43,3 +43,7 @@ Abra o `index.html` no navegador (ou use a extensão Live Server no VS Code).
 1. Crie um repositório no GitHub e envie os arquivos (`index.html`, `style.css`, `README.md` e a pasta `imagens`).
 2. Na Vercel, clique em **Add New > Project** e importe o repositório.
 3. Não precisa de build nem de configuração: deixe o *Framework Preset* como **Other** e clique em **Deploy**.
+
+## Feito por:
+
+- Luana Rêgo de Castro
