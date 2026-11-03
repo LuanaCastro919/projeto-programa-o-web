@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volume Memory - Etapa 1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="iniciarJogo()">
+  <h1 id="titulo"
+      onmouseover="destacarTitulo(event)"
+      onmouseout="destacarTitulo(event)">
+    Volume: <span id="volume-display">30</span>
+  </h1>
+
+  <div id="area-jogo"></div>
+
+  <script>
+    var figuras = [
+      { id: 1, nome: "Personagem 1", src: "imagens/personagem1.png" },
+      { id: 2, nome: "Personagem 2", src: "imagens/personagem2.png" },
+      { id: 3, nome: "Personagem 3", src: "imagens/personagem3.png" },
+      { id: 4, nome: "Personagem 4", src: "imagens/personagem4.png" },
+      { id: 5, nome: "Personagem 5", src: "imagens/personagem5.png" }
+    ];
+    var imagemVerso = "imagens/verso.png";
+    var volume = 30;
+    var titulo        = document.getElementById("titulo");
+    var volumeDisplay = document.getElementById("volume-display");
+    var areaJogo      = document.getElementById("area-jogo");
+
+    function destacarTitulo(event) {
+      if (event.type === "mouseover") {
+        titulo.style.color = "gold";
+      } else {
+        titulo.style.color = "";
+      }
+    }
+    function iniciarJogo() {
+      volumeDisplay.textContent = volume;
+
+      var tabuleiro = document.createElement("div");
+      tabuleiro.classList.add("tabuleiro");
+      tabuleiro.setAttribute("id", "tabuleiro");
+      areaJogo.appendChild(tabuleiro);
+
+      montarCartas();
+    }
+    function montarCartas() {
+      var tabuleiro = document.getElementById("tabuleiro");
+      tabuleiro.textContent = "";
+
+      var ids = [];
+      for (var i = 0; i < figuras.length; i++) {
+        ids.push(figuras[i].id);
+        ids.push(figuras[i].id);
+      }
+      ids = embaralhar(ids);
+
+      for (var n = 0; n < ids.length; n++) {
+        var carta = document.createElement("div");
+        carta.classList.add("carta");
+        carta.setAttribute("data-carta", n + 1);
+        carta.setAttribute("data-figura", ids[n]);
+
+        var img = document.createElement("img");
+        img.setAttribute("src", imagemVerso);
+        img.alt = "Carta virada para baixo";
+        carta.appendChild(img);
+
+        // eventos ligados via JavaScript
+        carta.onclick = cliqueNaCarta;
+        carta.onmouseenter = entrouNaCarta;
+        carta.onmouseout = saiuDaCarta;
+
+        tabuleiro.appendChild(carta);
+      }
+    }
+
+    function embaralhar(lista) {
+      for (var i = lista.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var guardado = lista[i];
+        lista[i] = lista[j];
+        lista[j] = guardado;
+      }
+      return lista;
+    }
+
+    function cliqueNaCarta(event) {
+      var carta = event.target;
+      if (carta.tagName === "IMG") {
+        carta = carta.parentElement;
+      }
+
+      var idFigura = Number(carta.getAttribute("data-figura"));
+      var img = carta.firstElementChild;
+
+      carta.classList.toggle("virada");
+
+      if (carta.classList.contains("virada")) {
+        img.setAttribute("src", figuras[idFigura - 1].src);
+        img.alt = figuras[idFigura - 1].nome;
+      } else {
+        img.setAttribute("src", imagemVerso);
+        img.alt = "Carta virada para baixo";
+      }
+    }
+
+    function entrouNaCarta(event) {
+      event.target.style.borderRadius = "24px";
+    }
+    function saiuDaCarta(event) {
+      event.target.style.borderRadius = "";
+    }
+  </script>
+</body>
+</html>
