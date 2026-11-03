@@ -1,4 +1,4 @@
-# Volume Memory
+# Volume da Memória
 
 Jogo da memória com cartas de imagens, feito com HTML (`index.html`), CSS (`style.css`) e JavaScript (dentro do `index.html`), usando apenas DOM e eventos do JavaScript puro.
 
